@@ -1489,7 +1489,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d31c0e94ec02fd64b4a8c3ba36eb53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToRotate: {fileID: 1557415646}
+  container: {fileID: 1557415646}
+  centrePiece: {fileID: 1314504574}
+  animationDuration: 3
+  peakIntensity: 3
 --- !u!4 &1557415646
 Transform:
   m_ObjectHideFlags: 0
