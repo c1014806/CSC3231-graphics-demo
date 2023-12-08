@@ -5,11 +5,8 @@ using UnityEngine;
 public class AnimateObelisk : MonoBehaviour
 {
     public Transform container;
+    public Transform swirlingParticleModel;
     public Transform centrePiece;
-    public Transform particle1;
-    public Transform particle2;
-    public Transform particle3;
-    public Transform particle4;
 
     public float animationDuration;
     public float peakIntensity;
@@ -18,6 +15,7 @@ public class AnimateObelisk : MonoBehaviour
     private MeshRenderer obeliskRenderer;
     private float timeElapsed = 0.0f;
     private float itensityChangePerSecond;
+    private List<Transform> swirlingParticles = new List<Transform>();
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +23,21 @@ public class AnimateObelisk : MonoBehaviour
         obeliskRenderer = centrePiece.GetComponent<MeshRenderer>();
         // spend half the time increasing intensity, half decreasing
         itensityChangePerSecond = peakIntensity / (animationDuration / 2);
+
+        // create prefabs with desired starting position relative to parent
+        List<Vector3> startingPositions = new List<Vector3> {
+            new Vector3(4, 0, 0), 
+            new Vector3(0, 0, 4), 
+            new Vector3(-4, 0, 0), 
+            new Vector3(0, 0, -4)
+        };
+        for (int i = 0; i < 4; i++) {
+            Transform particle = Instantiate(swirlingParticleModel, new Vector3(0,0,0), Quaternion.identity) as Transform;
+            particle.transform.parent = container.transform;
+            particle.localPosition = startingPositions[i];
+
+            swirlingParticles.Add(particle);
+        }
     }
 
     // Update is called once per frame
@@ -62,16 +75,12 @@ public class AnimateObelisk : MonoBehaviour
     private void animateParticles() {
         float radiansThroughRotation = 2 * Mathf.PI / animationDuration * timeElapsed;
 
-        float particle1y = (float) Mathf.Sin(radiansThroughRotation) * particleHeightMultiplier;
-        particle1.localPosition = new Vector3(particle1.localPosition.x, particle1y, particle1.localPosition.z);
+        float offset = 0;
+        foreach (Transform particle in swirlingParticles) {
+            float y = (float) Mathf.Sin(radiansThroughRotation + offset) * particleHeightMultiplier;
+            particle.localPosition = new Vector3(particle.localPosition.x, y, particle.localPosition.z);
 
-        float particle2y = (float) Mathf.Sin(radiansThroughRotation + Mathf.PI / 2) * particleHeightMultiplier;
-        particle2.localPosition = new Vector3(particle2.localPosition.x, particle2y, particle2.localPosition.z);
-
-        float particle3y = (float) Mathf.Sin(radiansThroughRotation + Mathf.PI) * particleHeightMultiplier;
-        particle3.localPosition = new Vector3(particle3.localPosition.x, particle3y, particle3.localPosition.z);
-
-        float particle4y = (float) Mathf.Sin(radiansThroughRotation + Mathf.PI * 3 / 2) * particleHeightMultiplier;
-        particle4.localPosition = new Vector3(particle4.localPosition.x, particle4y, particle4.localPosition.z);
+            offset += Mathf.PI / 2;
+        }
     }
 }
