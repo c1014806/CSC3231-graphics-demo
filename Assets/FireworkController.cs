@@ -32,6 +32,7 @@ public class FireworkController : MonoBehaviour
         } else if (runningFirework) {
             moveParticles();
         } else if (!runningFirework & timeTaken >= gapBetweenFireworks) {
+            // rerun the firework after a set number of time passes
             setupParticles();
             runningFirework = true;
             timeTaken = 0f;
