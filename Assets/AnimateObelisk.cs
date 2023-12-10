@@ -24,7 +24,7 @@ public class AnimateObelisk : MonoBehaviour
         // spend half the time increasing intensity, half decreasing
         itensityChangePerSecond = peakIntensity / (animationDuration / 2);
 
-        // create prefabs with desired starting position relative to parent
+        // create prefabs with desired starting position relative to parent such that each are a quarter of a circle apart
         List<Vector3> startingPositions = new List<Vector3> {
             new Vector3(4, 0, 0), 
             new Vector3(0, 0, 4), 
@@ -51,11 +51,11 @@ public class AnimateObelisk : MonoBehaviour
         
         animateObeliskMaterialIntensity();
         animateParticles();
-        container.Rotate(0, 200 * Time.deltaTime, 0);
+        rotateContainer();
     }
 
     private void rotateContainer() {
-
+        container.Rotate(0, 200 * Time.deltaTime, 0);
     }
 
     private void animateObeliskMaterialIntensity() {
@@ -73,6 +73,7 @@ public class AnimateObelisk : MonoBehaviour
     }
 
     private void animateParticles() {
+        // use sin value to allow the particles to move up and down smoothly
         float radiansThroughRotation = 2 * Mathf.PI / animationDuration * timeElapsed;
 
         float offset = 0;
