@@ -9,30 +9,32 @@ public class FireworkController : MonoBehaviour
     public int numParticles;
 
     private float fireworkDuration = 3f;
+    private float gapBetweenFireworks = 2f;
     private float timeTaken = 0f;
-    private bool finished = false;
-    private List<GameObject> particles = new List<GameObject>();
-    
+
+    private bool runningFirework = true;
+    private List<GameObject> particles;
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < numParticles; i++) {
-            // instantiate a list of firework particles
-            GameObject particle = Instantiate(fireworkParticleModel);
-            particle.transform.parent = fireworkContainer.transform;
-            particle.transform.localPosition = new Vector3(0f, 0f, 0f);
-            particles.Add(particle);
-        }
+        setupParticles();
     }
 
     // Update is called once per frame
     void Update()
     {
         timeTaken += Time.deltaTime;
-        if (timeTaken >= fireworkDuration & !finished) {
+        if (timeTaken >= fireworkDuration & runningFirework) {
             cleanupParticles();
-        } else if (!finished) {
+            runningFirework = false;
+            timeTaken = 0f;
+        } else if (runningFirework) {
             moveParticles();
+        } else if (!runningFirework & timeTaken >= gapBetweenFireworks) {
+            setupParticles();
+            runningFirework = true;
+            timeTaken = 0f;
         }
     }
 
@@ -48,7 +50,7 @@ public class FireworkController : MonoBehaviour
                 }
 
                 // calculate a range of directions in a circle around centrepoint
-                float directionY = (Mathf.Cos(i * (2 * Mathf.PI) / particles.Count) + 1) * 2;
+                float directionY = (Mathf.Cos(i * (2 * Mathf.PI) / particles.Count) + 1.1f) * 2;
                 float directionX = Mathf.Sin(i * (2 * Mathf.PI) / particles.Count);
                 Vector3 direction = new Vector3(directionX, directionY, 0.5f) * forceMultiplier;
 
@@ -56,6 +58,18 @@ public class FireworkController : MonoBehaviour
 
                 particles[i].GetComponent<Rigidbody>().AddForce(direction, ForceMode.Force);
             }
+        }
+    }
+
+    void setupParticles() {
+        particles = new List<GameObject>();
+    
+        for (int i = 0; i < numParticles; i++) {
+            // instantiate a list of firework particles
+            GameObject particle = Instantiate(fireworkParticleModel);
+            particle.transform.parent = fireworkContainer.transform;
+            particle.transform.localPosition = new Vector3(0f, 0f, 0f);
+            particles.Add(particle);
         }
     }
 
