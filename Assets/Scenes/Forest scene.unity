@@ -759,7 +759,7 @@ MonoBehaviour:
   preImpactModel: {fileID: 9220715749533624505, guid: 0d5bc6ebe5eb2139999187e05090ab47, type: 3}
   postImpactModel: {fileID: 9111356219437754751, guid: a99388ec1fe28e554b45bd02353c7709, type: 3}
   asteroidModel: {fileID: 1000010869019282, guid: d7ba4fe833670a140b9b6085652f0e26, type: 3}
-  timeToImpact: 10
+  timeToImpact: 20
 --- !u!1 &693950282
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,13 +785,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693950282}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.46529025, z: -0, w: 0.8851582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 204.41, y: 96.6, z: 327.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 55.458, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &693950284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,7 +1635,7 @@ MonoBehaviour:
   directionalLight: {fileID: 1422525753}
   sun: {fileID: 870104622}
   sunCentrePoint: {fileID: 1009155765}
-  dayDurationSeconds: 20
+  dayDurationSeconds: 100
 --- !u!1001 &1498886514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2054,7 +2054,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112

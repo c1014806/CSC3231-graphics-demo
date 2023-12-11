@@ -50,7 +50,7 @@ void Start()
                 }
 
                 // calculate a range of directions in a circle around centrepoint
-                float directionY = (Mathf.Cos(i * (2 * Mathf.PI) / particles.Count) + 1.1f) * 2;
+                float directionY = (Mathf.Cos(i * (2 * Mathf.PI) / particles.Count) + 1.1f) * 4;
                 float directionX = Mathf.Sin(i * (2 * Mathf.PI) / particles.Count);
                 Vector3 direction = new Vector3(directionX, directionY, 0.5f) * forceMultiplier;
 
