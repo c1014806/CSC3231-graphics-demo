@@ -6,17 +6,20 @@ public class FireworkController : MonoBehaviour
 {
     public GameObject fireworkParticleModel;
     public GameObject fireworkContainer;
-    public int numParticles;
 
     private float fireworkDuration = 3f;
-    private float gapBetweenFireworks = 2f;
     private float timeTaken = 0f;
 
-    private bool runningFirework = true;
     private List<GameObject> particles;
+    private List<Color> possibleColors = new List<Color> {
+        new Color(0f / 255f, 255f / 255f, 0f / 255f), // green
+        new Color(255f / 255f, 0f / 255f, 0f / 255f), // red
+        new Color(0f / 255f, 0f / 255f, 255f / 255f), // blue
+        new Color(255f / 255f, 0f / 255f, 255f / 255f) // pink
+    };
 
-    // Start is called before the first frame update
-    void Start()
+// Start is called before the first frame update
+void Start()
     {
         setupParticles();
     }
@@ -25,17 +28,13 @@ public class FireworkController : MonoBehaviour
     void Update()
     {
         timeTaken += Time.deltaTime;
-        if (timeTaken >= fireworkDuration & runningFirework) {
+
+        // destroy all game objects when the firework has finished to save resources
+        if (timeTaken >= fireworkDuration) {
             cleanupParticles();
-            runningFirework = false;
-            timeTaken = 0f;
-        } else if (runningFirework) {
+            Destroy(gameObject);
+        } else {
             moveParticles();
-        } else if (!runningFirework & timeTaken >= gapBetweenFireworks) {
-            // rerun the firework after a set number of time passes
-            setupParticles();
-            runningFirework = true;
-            timeTaken = 0f;
         }
     }
 
@@ -55,21 +54,24 @@ public class FireworkController : MonoBehaviour
                 float directionX = Mathf.Sin(i * (2 * Mathf.PI) / particles.Count);
                 Vector3 direction = new Vector3(directionX, directionY, 0.5f) * forceMultiplier;
 
-                //particles[i].transform.localPosition = direction;
-
                 particles[i].GetComponent<Rigidbody>().AddForce(direction, ForceMode.Force);
             }
         }
     }
 
     void setupParticles() {
+        // pick random colour for the firework
+        int index = Random.Range(0, 4);
+        int numParticles = Random.Range(30, 80);
+
         particles = new List<GameObject>();
-    
         for (int i = 0; i < numParticles; i++) {
             // instantiate a list of firework particles
             GameObject particle = Instantiate(fireworkParticleModel);
             particle.transform.parent = fireworkContainer.transform;
             particle.transform.localPosition = new Vector3(0f, 0f, 0f);
+            particle.GetComponent<TrailRenderer>().startColor = possibleColors[index];
+            particle.GetComponent<TrailRenderer>().endColor = possibleColors[index];
             particles.Add(particle);
         }
     }

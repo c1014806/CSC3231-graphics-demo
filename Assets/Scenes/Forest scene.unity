@@ -663,7 +663,6 @@ GameObject:
   - component: {fileID: 555505509}
   - component: {fileID: 555505508}
   - component: {fileID: 555505511}
-  - component: {fileID: 555505512}
   m_Layer: 0
   m_Name: ForestFloor
   m_TagString: Untagged
@@ -761,21 +760,6 @@ MonoBehaviour:
   postImpactModel: {fileID: 9111356219437754751, guid: a99388ec1fe28e554b45bd02353c7709, type: 3}
   asteroidModel: {fileID: 1000010869019282, guid: d7ba4fe833670a140b9b6085652f0e26, type: 3}
   timeToImpact: 10
---- !u!114 &555505512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555505507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe0420f639afd7ed85ecc8bbcc6f8db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireworkParticleModel: {fileID: 3901942027139725059, guid: 5c347c735e74eb22eb3c837c724b46b5, type: 3}
-  fireworkContainer: {fileID: 693950282}
-  numParticles: 50
 --- !u!1 &693950282
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,8 +769,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693950283}
+  - component: {fileID: 693950284}
   m_Layer: 0
-  m_Name: FireworkContainer
+  m_Name: FireworkShowContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,13 +785,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693950282}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 211.8067, y: 90.91, z: 267.2699}
+  m_LocalRotation: {x: -0, y: 0.46529025, z: -0, w: 0.8851582}
+  m_LocalPosition: {x: 204.41, y: 96.6, z: 327.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 55.458, z: 0}
+--- !u!114 &693950284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693950282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d8f319fcfb2d945b1c4ee0213e1e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireworkPrefab: {fileID: 354993412255461883, guid: 45e5e561da8930b429e1742c80b36700, type: 3}
+  fireworkShowContainer: {fileID: 693950283}
+  timeBetweenLaunches: 1
 --- !u!1001 &700121703
 PrefabInstance:
   m_ObjectHideFlags: 0
