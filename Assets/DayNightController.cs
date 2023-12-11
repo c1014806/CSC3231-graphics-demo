@@ -6,6 +6,8 @@ public class DayNightController : MonoBehaviour
 {
     public Material skyboxPrefab;
     public GameObject directionalLight;
+    public GameObject sun;
+    public Transform sunCentrePoint;
     public float dayDurationSeconds;
 
     private Material skyboxInstance;
@@ -44,6 +46,8 @@ public class DayNightController : MonoBehaviour
         } else if (timeSinceDayBegan >= 7 * eighthOfDay) {
             transitionNightToDay();
         }
+
+        moveSunPosition();
     }
 
     private void transitionDayToNight() {
@@ -105,5 +109,23 @@ public class DayNightController : MonoBehaviour
         
         skyboxInstance.SetFloat("_AtmosphereThickness", thickness);
         Debug.Log(skyboxInstance.GetFloat("_AtmosphereThickness"));
+    }
+
+    private void moveSunPosition()
+    {
+        float distanceOfSunFromPlanet = 1600f;
+        float distanceOfLightFromPlanet = 1500f;
+        float proportionOfDay = timeSinceDayBegan / dayDurationSeconds;
+        
+        float positionY = Mathf.Cos((2 * Mathf.PI * proportionOfDay) - (Mathf.PI / 2));
+        float positionX = Mathf.Sin((2 * Mathf.PI * proportionOfDay) - (Mathf.PI / 2));
+
+        sun.transform.localPosition = new Vector3(positionX * distanceOfSunFromPlanet, positionY * distanceOfSunFromPlanet, 0f);
+
+        if (timeSinceDayBegan < dayDurationSeconds / 2)
+        {
+            directionalLight.transform.localPosition = new Vector3(positionX * distanceOfLightFromPlanet, positionY * distanceOfLightFromPlanet, 0f);
+            directionalLight.transform.LookAt(sunCentrePoint);
+        }
     }
 }

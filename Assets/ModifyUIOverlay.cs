@@ -46,8 +46,10 @@ public class ModifyUIOverlay : MonoBehaviour
         timeSinceLastCalculation += Time.deltaTime;
         framesSinceLastCalculation += 1;
 
-        if (timeSinceLastCalculation >= 0.1f) {
+        if (timeSinceLastCalculation >= 0.3f) {
             previousFramerate = (float) framesSinceLastCalculation / timeSinceLastCalculation;
+            timeSinceLastCalculation = 0f;
+            framesSinceLastCalculation = 0;
         }
     }
 }
