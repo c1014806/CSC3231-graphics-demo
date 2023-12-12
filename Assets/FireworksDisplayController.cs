@@ -36,7 +36,7 @@ public class FireworksDisplayController : MonoBehaviour
         GameObject firework = Instantiate(fireworkPrefab) as GameObject;
         firework.transform.parent = fireworkShowContainer;
 
-        // give it a random pos in relation to the showContainer
+        // give it a random position in relation to the showContainer
         int x = Random.Range(-30, 30);
         int y = Random.Range(-15, 15);
         int z = Random.Range(-10, 10);

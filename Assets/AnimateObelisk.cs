@@ -61,10 +61,10 @@ public class AnimateObelisk : MonoBehaviour
     private void animateObeliskMaterialIntensity() {
         float intensity;
         if (timeElapsed <= animationDuration / 2) {
-            //increase
+            //increase fir first half
             intensity = itensityChangePerSecond * timeElapsed;
         } else {
-            //decrease 
+            //decrease for second half
             intensity = itensityChangePerSecond * (animationDuration - timeElapsed);
         }
 
@@ -81,6 +81,7 @@ public class AnimateObelisk : MonoBehaviour
             float y = (float) Mathf.Sin(radiansThroughRotation + offset) * particleHeightMultiplier;
             particle.localPosition = new Vector3(particle.localPosition.x, y, particle.localPosition.z);
 
+            // use offset to make each particle a quarter of a wave apart
             offset += Mathf.PI / 2;
         }
     }

@@ -43,7 +43,7 @@ public class ModifyUIOverlay : MonoBehaviour
     }
 
     void CalculateFrameRate() {
-        // calculate avg framerate every 0.3 seconds
+        // calculate avg framerate every 0.3 seconds to get a frequently updating average
         timeSinceLastCalculation += Time.deltaTime;
         framesSinceLastCalculation += 1;
 

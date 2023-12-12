@@ -11,7 +11,6 @@ public class DayNightController : MonoBehaviour
     public float dayDurationSeconds;
 
     private Material skyboxInstance;
-    private float transitionDuration;
     private float timeSinceTransitionBegan;
     private float timeSinceDayBegan;
 
@@ -21,7 +20,6 @@ public class DayNightController : MonoBehaviour
         skyboxInstance = Instantiate(skyboxPrefab);
         RenderSettings.skybox = skyboxInstance;
 
-        transitionDuration = dayDurationSeconds / 8f;
         timeSinceTransitionBegan = 0f;
         timeSinceDayBegan = 0f;
     }
@@ -31,7 +29,7 @@ public class DayNightController : MonoBehaviour
     {
         timeSinceDayBegan += Time.deltaTime;
         
-        // reset day if its over
+        // reset day if the right duration has elapsed
         if (timeSinceDayBegan >= dayDurationSeconds) {
             timeSinceDayBegan = 0f;
             timeSinceTransitionBegan = 0f;
@@ -113,6 +111,8 @@ public class DayNightController : MonoBehaviour
 
     private void moveSunPosition()
     {
+        // the sun and the directional light follow a circle with the centre of the terrain in the middle
+        // any rotation to get the desired angle in the sky is already handled by the parent object
         float distanceOfSunFromPlanet = 1600f;
         float distanceOfLightFromPlanet = 1500f;
         float proportionOfDay = timeSinceDayBegan / dayDurationSeconds;
@@ -122,9 +122,12 @@ public class DayNightController : MonoBehaviour
 
         sun.transform.localPosition = new Vector3(positionX * distanceOfSunFromPlanet, positionY * distanceOfSunFromPlanet, 0f);
 
+        // leaving the directional light horizontal to the planets surface overnight leaves just the right amount of light 
+        // for the darkness to look good.
         if (timeSinceDayBegan < dayDurationSeconds / 2)
         {
             directionalLight.transform.localPosition = new Vector3(positionX * distanceOfLightFromPlanet, positionY * distanceOfLightFromPlanet, 0f);
+            // ensure the light is always rotated to face the planets surface
             directionalLight.transform.LookAt(sunCentrePoint);
         }
     }
