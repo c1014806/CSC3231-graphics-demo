@@ -37,5 +37,16 @@ public class PlayerWalking : MonoBehaviour
         if (Input.GetKey("space")) {
             playerRigidBody.AddForce(Vector3.up * frameMultiplier, ForceMode.Force);
         }
+        if (Input.GetKey("left shift")) {
+            playerRigidBody.AddForce(Vector3.down * frameMultiplier, ForceMode.Force);
+        }
+
+        // toggle gravity on or off for the player when G is pressed
+        // only use the down press so that gravity isnt toggled again until the key is released and re-pressed
+        if (Input.GetKeyDown(KeyCode.G)) {
+            bool currentGravityStatus = playerRigidBody.useGravity;
+            playerRigidBody.useGravity = !currentGravityStatus;
+        }
     }
 }
+ 
